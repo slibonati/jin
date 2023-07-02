@@ -2,10 +2,17 @@ plugins {
     id "application"
     id "wrapper"
     id 'com.github.sherter.google-java-format' version '0.3.2'
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 application {
     mainClass = "free.jin.JinApplication"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'free.jin.JinApplication'
+    }
 }
 
 wrapper {
