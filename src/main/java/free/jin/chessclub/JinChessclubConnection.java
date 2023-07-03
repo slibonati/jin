@@ -1068,7 +1068,7 @@ public class JinChessclubConnection extends ChessclubConnection
     try {
       forum = getGameInfo(gameNumber).game;
     } catch (NoSuchGameException e) {
-      forum = new Integer(gameNumber); // This shouldn't happen, but just in case
+      forum = gameNumber; // This shouldn't happen, but just in case
     }
 
     ChatEvent evt =
@@ -1133,7 +1133,7 @@ public class JinChessclubConnection extends ChessclubConnection
    * directly.
    */
   private GameInfo getGameInfo(int gameNumber) throws NoSuchGameException {
-    GameInfo gameInfo = (GameInfo) gameNumbersToGameInfo.get(new Integer(gameNumber));
+    GameInfo gameInfo = (GameInfo) gameNumbersToGameInfo.get(gameNumber);
     if (gameInfo == null) throw new NoSuchGameException();
 
     return gameInfo;
@@ -1143,7 +1143,7 @@ public class JinChessclubConnection extends ChessclubConnection
    * Adds the specified <code>GameInfo</code> to the <code>gameNumbersToGameInfo</code> hashtable.
    */
   private void addGameInfo(int gameNumber, GameInfo gameInfo) {
-    gameNumbersToGameInfo.put(new Integer(gameNumber), gameInfo);
+    gameNumbersToGameInfo.put(gameNumber, gameInfo);
     if (gameInfo.game.getGameType() == Game.MY_GAME) userGamesCount++;
   }
 
@@ -1152,7 +1152,7 @@ public class JinChessclubConnection extends ChessclubConnection
    * <code>gameNumbersToGameInfo</code> hashtable.
    */
   private GameInfo removeGameInfo(int gameNumber) {
-    GameInfo gameInfo = (GameInfo) gameNumbersToGameInfo.remove(new Integer(gameNumber));
+    GameInfo gameInfo = (GameInfo) gameNumbersToGameInfo.remove(gameNumber);
     if ((gameInfo != null) && (gameInfo.game.getGameType() == Game.MY_GAME)) userGamesCount--;
 
     return gameInfo;
@@ -1163,7 +1163,7 @@ public class JinChessclubConnection extends ChessclubConnection
    * <code>false</code> otherwise.
    */
   private boolean gameExists(int gameNumber) {
-    return gameNumbersToGameInfo.containsKey(new Integer(gameNumber));
+    return gameNumbersToGameInfo.containsKey(gameNumber);
   }
 
   /**
@@ -1221,14 +1221,14 @@ public class JinChessclubConnection extends ChessclubConnection
    * Returns true if there is a non-started game with the given gameNumber.
    */
   private boolean existsNonStarted(int gameNumber) {
-    return nonStartedGames.containsKey(new Integer(gameNumber));
+    return nonStartedGames.containsKey(gameNumber);
   }
 
   /**
    * Returns the given property of a non started game with the given gameNumber.
    */
   private Object getPropertyForNonStarted(int gameNumber, String propertyName) {
-    Hashtable gameProps = (Hashtable) nonStartedGames.get(new Integer(gameNumber));
+    Hashtable gameProps = (Hashtable) nonStartedGames.get(gameNumber);
     return gameProps.get(propertyName);
   }
 
@@ -1236,7 +1236,7 @@ public class JinChessclubConnection extends ChessclubConnection
    * Sets the value of the given property in the given non-started game to the given value.
    */
   private void putPropertyForNonStarted(int gameNumber, String propertyName, Object propertyValue) {
-    Hashtable gameProps = (Hashtable) nonStartedGames.get(new Integer(gameNumber));
+    Hashtable gameProps = (Hashtable) nonStartedGames.get(gameNumber);
     gameProps.put(propertyName, propertyValue);
   }
 
@@ -1266,7 +1266,7 @@ public class JinChessclubConnection extends ChessclubConnection
    */
   private Game createGameFromNonStarted(int gameNumber, Position initialPosition) {
 
-    Hashtable gameProps = (Hashtable) nonStartedGames.remove(new Integer(gameNumber));
+    Hashtable gameProps = (Hashtable) nonStartedGames.remove(gameNumber);
 
     String whiteName = (String) gameProps.get("WhiteName");
     String blackName = (String) gameProps.get("BlackName");
@@ -1308,7 +1308,7 @@ public class JinChessclubConnection extends ChessclubConnection
         timeControl,
         whiteRating,
         blackRating,
-        new Integer(gameNumber),
+        gameNumber,
         ratingCategoryString,
         isRated,
         isPlayedGame,
@@ -1818,60 +1818,60 @@ public class JinChessclubConnection extends ChessclubConnection
 
   static {
     GAME_END_REASONS.put(
-        new Pair("Res", "1-0"), new Pair(new Integer(Game.RESIGNS), Player.BLACK_PLAYER));
+        new Pair("Res", "1-0"), new Pair(Game.RESIGNS, Player.BLACK_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Res", "0-1"), new Pair(new Integer(Game.RESIGNS), Player.WHITE_PLAYER));
+        new Pair("Res", "0-1"), new Pair(Game.RESIGNS, Player.WHITE_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Mat", "1-0"), new Pair(new Integer(Game.CHECKMATED), Player.BLACK_PLAYER));
+        new Pair("Mat", "1-0"), new Pair(Game.CHECKMATED, Player.BLACK_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Mat", "0-1"), new Pair(new Integer(Game.CHECKMATED), Player.WHITE_PLAYER));
+        new Pair("Mat", "0-1"), new Pair(Game.CHECKMATED, Player.WHITE_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Fla", "1-0"), new Pair(new Integer(Game.TIME_FORFEITS), Player.BLACK_PLAYER));
+        new Pair("Fla", "1-0"), new Pair(Game.TIME_FORFEITS, Player.BLACK_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Fla", "0-1"), new Pair(new Integer(Game.TIME_FORFEITS), Player.WHITE_PLAYER));
+        new Pair("Fla", "0-1"), new Pair(Game.TIME_FORFEITS, Player.WHITE_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Adj", "1-0"), new Pair(new Integer(Game.ADJUDICATED), Player.BLACK_PLAYER));
+        new Pair("Adj", "1-0"), new Pair(Game.ADJUDICATED, Player.BLACK_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Adj", "0-1"), new Pair(new Integer(Game.ADJUDICATED), Player.WHITE_PLAYER));
+        new Pair("Adj", "0-1"), new Pair(Game.ADJUDICATED, Player.WHITE_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("BQ", "1-0"), new Pair(new Integer(Game.DISCONNECTED), Player.BLACK_PLAYER));
+        new Pair("BQ", "1-0"), new Pair(Game.DISCONNECTED, Player.BLACK_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("WQ", "0-1"), new Pair(new Integer(Game.DISCONNECTED), Player.WHITE_PLAYER));
+        new Pair("WQ", "0-1"), new Pair(Game.DISCONNECTED, Player.WHITE_PLAYER));
 
     GAME_END_REASONS.put(
-        new Pair("Agr", "1/2-1/2"), new Pair(new Integer(Game.DRAW_AGREEMENT), null));
-    GAME_END_REASONS.put(new Pair("Sta", "1/2-1/2"), new Pair(new Integer(Game.STALEMATE), null));
-    GAME_END_REASONS.put(new Pair("Rep", "1/2-1/2"), new Pair(new Integer(Game.REPETITION), null));
+        new Pair("Agr", "1/2-1/2"), new Pair(Game.DRAW_AGREEMENT, null));
+    GAME_END_REASONS.put(new Pair("Sta", "1/2-1/2"), new Pair(Game.STALEMATE, null));
+    GAME_END_REASONS.put(new Pair("Rep", "1/2-1/2"), new Pair(Game.REPETITION, null));
     GAME_END_REASONS.put(
-        new Pair("50", "1/2-1/2"), new Pair(new Integer(Game.FIFTY_MOVE_RULE), null));
-    GAME_END_REASONS.put(new Pair("Sta", "1/2-1/2"), new Pair(new Integer(Game.STALEMATE), null));
+        new Pair("50", "1/2-1/2"), new Pair(Game.FIFTY_MOVE_RULE, null));
+    GAME_END_REASONS.put(new Pair("Sta", "1/2-1/2"), new Pair(Game.STALEMATE, null));
     GAME_END_REASONS.put(
         new Pair("TM", "1/2-1/2"),
-        new Pair(new Integer(Game.OUT_OF_TIME_AND_OPP_HAS_NO_MATERIAL_TO_MATE), null));
+        new Pair(Game.OUT_OF_TIME_AND_OPP_HAS_NO_MATERIAL_TO_MATE, null));
     GAME_END_REASONS.put(
-        new Pair("NM", "1/2-1/2"), new Pair(new Integer(Game.BOTH_NO_MATERIAL_TO_MATE), null));
+        new Pair("NM", "1/2-1/2"), new Pair(Game.BOTH_NO_MATERIAL_TO_MATE, null));
     GAME_END_REASONS.put(
-        new Pair("NT", "1/2-1/2"), new Pair(new Integer(Game.BOTH_OUT_OF_TIME), null));
-    GAME_END_REASONS.put(new Pair("Adj", "1/2-1/2"), new Pair(new Integer(Game.ADJUDICATED), null));
+        new Pair("NT", "1/2-1/2"), new Pair(Game.BOTH_OUT_OF_TIME, null));
+    GAME_END_REASONS.put(new Pair("Adj", "1/2-1/2"), new Pair(Game.ADJUDICATED, null));
 
     GAME_END_REASONS.put(
-        new Pair("Agr", "aborted"), new Pair(new Integer(Game.ABORTED_AGREEMENT), null));
+        new Pair("Agr", "aborted"), new Pair(Game.ABORTED_AGREEMENT, null));
     GAME_END_REASONS.put(
         new Pair("BQ", "aborted"),
-        new Pair(new Integer(Game.ABORTED_DISCONNECTED), Player.BLACK_PLAYER));
+        new Pair(Game.ABORTED_DISCONNECTED, Player.BLACK_PLAYER));
     GAME_END_REASONS.put(
         new Pair("WQ", "aborted"),
-        new Pair(new Integer(Game.ABORTED_DISCONNECTED), Player.WHITE_PLAYER));
+        new Pair(Game.ABORTED_DISCONNECTED, Player.WHITE_PLAYER));
     GAME_END_REASONS.put(
         new Pair("BA", "aborted"),
-        new Pair(new Integer(Game.ABORTED_COURTESY), Player.BLACK_PLAYER));
+        new Pair(Game.ABORTED_COURTESY, Player.BLACK_PLAYER));
     GAME_END_REASONS.put(
         new Pair("WA", "aborted"),
-        new Pair(new Integer(Game.ABORTED_COURTESY), Player.WHITE_PLAYER));
+        new Pair(Game.ABORTED_COURTESY, Player.WHITE_PLAYER));
     GAME_END_REASONS.put(
-        new Pair("Adj", "aborted"), new Pair(new Integer(Game.ABORTED_ADMIN), null));
+        new Pair("Adj", "aborted"), new Pair(Game.ABORTED_ADMIN, null));
     GAME_END_REASONS.put(
-        new Pair("Sho", "aborted"), new Pair(new Integer(Game.ABORTED_TOO_SHORT), null));
+        new Pair("Sho", "aborted"), new Pair(Game.ABORTED_TOO_SHORT, null));
   }
 
   /**
@@ -1934,7 +1934,7 @@ public class JinChessclubConnection extends ChessclubConnection
       Game game = gameInfo.game;
 
       game.setGameType(gameType);
-      game.setId(new Integer(gameNumber));
+      game.setId(gameNumber);
       game.setWhiteName(whiteName);
       game.setBlackName(blackName);
       game.setRatingCategoryString(ratingCategoryString);
@@ -2063,7 +2063,7 @@ public class JinChessclubConnection extends ChessclubConnection
         // that wasn't set up properly (usually happens for non-supported variants).
 
         if (existsNonStarted(gameNumber)) // This way we know it's a non-started game.
-        putPropertyForNonStarted(gameNumber, "GameType", new Integer(newGameType));
+        putPropertyForNonStarted(gameNumber, "GameType", newGameType);
         else return;
         // A datagram for a game that wasn't processed, probably
         // because the variant is not supported.
@@ -2869,7 +2869,7 @@ public class JinChessclubConnection extends ChessclubConnection
 
     if (!"X".equals(code)) state |= PLAYING_FRIEND_STATE_MASK;
 
-    return new Integer(state);
+    return state;
   }
 
   /**
@@ -3229,7 +3229,7 @@ public class JinChessclubConnection extends ChessclubConnection
      * setTakebackCount method.
      */
     public void setOffer(int offerId, Player player, boolean isMade) {
-      Pair offer = new Pair(player, new Integer(offerId));
+      Pair offer = new Pair(player, offerId);
       if (isMade) offers.put(offer, offer);
       else offers.remove(offer);
     }
@@ -3247,7 +3247,7 @@ public class JinChessclubConnection extends ChessclubConnection
      * Takeback offers are handled by the getTakebackCount method.
      */
     public boolean isOfferred(int offerId, Player player) {
-      return offers.containsKey(new Pair(player, new Integer(offerId)));
+      return offers.containsKey(new Pair(player, offerId));
     }
 
     /**
@@ -3393,7 +3393,7 @@ public class JinChessclubConnection extends ChessclubConnection
             !autoaccept,
             formula);
 
-    seeks.put(new Integer(index), seek);
+    seeks.put(index, seek);
 
     listenerManager.fireSeekEvent(new SeekEvent(this, clientTag, SeekEvent.SEEK_ADDED, seek));
   }
@@ -3409,7 +3409,7 @@ public class JinChessclubConnection extends ChessclubConnection
    * Fires the appropriate SeekEvent indicating a seek was removed.
    */
   protected void processSeekRemoved(String clientTag, int index, int reasonCode) {
-    Seek seek = (Seek) seeks.remove(new Integer(index));
+    Seek seek = (Seek) seeks.remove(index);
 
     if (seek == null) return;
 
@@ -4018,7 +4018,7 @@ public class JinChessclubConnection extends ChessclubConnection
             makeNewWindowOnInfo,
             confirmText.length() != 0 ? confirmText : null,
             isOpenToGuests);
-    ChessEvent existingEvent = (ChessEvent) chessEvents.put(new Integer(id), newEvent);
+    ChessEvent existingEvent = (ChessEvent) chessEvents.put(id, newEvent);
 
     if (existingEvent != null)
       listenerManager.fireChessEventEvent(
