@@ -355,7 +355,7 @@ public class JinChessclubConnection extends ChessclubConnection
       Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
       Constructor tsSocketConstructor =
           tsSocketClass.getConstructor(new Class[] {String.class, int.class});
-      result = (Socket) tsSocketConstructor.newInstance(new Object[] {hostname, new Integer(port)});
+      result = (Socket) tsSocketConstructor.newInstance(new Object[] {hostname, port});
     } catch (ClassNotFoundException e) {
     } catch (SecurityException e) {
     } catch (NoSuchMethodException e) {
@@ -1003,7 +1003,7 @@ public class JinChessclubConnection extends ChessclubConnection
             title,
             -1,
             message,
-            new Integer(channel));
+            channel);
 
     listenerManager.fireChatEvent(evt);
   }
@@ -1031,7 +1031,7 @@ public class JinChessclubConnection extends ChessclubConnection
             displayableTitle(titles),
             -1,
             message,
-            new Integer(channel));
+            channel);
 
     listenerManager.fireChatEvent(evt);
   }
@@ -1202,19 +1202,19 @@ public class JinChessclubConnection extends ChessclubConnection
     gameProps.put("Variant", variant);
     gameProps.put("RatingCategoryString", ratingCategoryString);
     gameProps.put("IsRated", isRated ? Boolean.TRUE : Boolean.FALSE);
-    gameProps.put("WhiteInitial", new Integer(whiteInitial));
-    gameProps.put("WhiteIncrement", new Integer(whiteIncrement));
-    gameProps.put("BlackInitial", new Integer(blackInitial));
-    gameProps.put("BlackIncrement", new Integer(blackIncrement));
+    gameProps.put("WhiteInitial", whiteInitial);
+    gameProps.put("WhiteIncrement", whiteIncrement);
+    gameProps.put("BlackInitial", blackInitial);
+    gameProps.put("BlackIncrement", blackIncrement);
     gameProps.put("IsPlayedGame", isPlayedGame ? Boolean.TRUE : Boolean.FALSE);
-    gameProps.put("WhiteRating", new Integer(whiteRating));
-    gameProps.put("BlackRating", new Integer(blackRating));
+    gameProps.put("WhiteRating", whiteRating);
+    gameProps.put("BlackRating", blackRating);
     gameProps.put("WhiteTitles", displayableTitle(whiteTitles));
     gameProps.put("BlackTitles", displayableTitle(blackTitles));
 
-    gameProps.put("GameType", new Integer(gameType));
+    gameProps.put("GameType", gameType);
 
-    nonStartedGames.put(new Integer(gameNumber), gameProps);
+    nonStartedGames.put(gameNumber, gameProps);
   }
 
   /**
@@ -4040,7 +4040,7 @@ public class JinChessclubConnection extends ChessclubConnection
    * registered listeners.
    */
   protected void processRemoveTourney(String clientTag, int id) {
-    ChessEvent evt = (ChessEvent) chessEvents.get(new Integer(id));
+    ChessEvent evt = (ChessEvent) chessEvents.get(id);
     if (evt == null) // Ignore DG_REMOVE_TOURNEY for events we didn't get a DG_TOURNEY for.
     return;
 
