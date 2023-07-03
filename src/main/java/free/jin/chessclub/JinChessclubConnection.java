@@ -4289,4 +4289,16 @@ public class JinChessclubConnection extends ChessclubConnection
   public void execRunnable(Runnable runnable) {
     SwingUtilities.invokeLater(runnable);
   }
+
+@Override
+public boolean isRematchSupported() {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public void requestRematch(Game game) {
+	// TODO Auto-generated method stub
+	
+}
 }
