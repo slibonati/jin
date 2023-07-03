@@ -29,13 +29,13 @@ text-sound-2 = ding.wav
 
 
 
-#OnLogin = welcome-fics.wav
-#OnDisconnect = goodbye.wav
+OnLogin = welcome-fics.wav
+OnDisconnect = goodbye.wav
 Move = move-fics.wav
 Capture = capture-fics.wav
 Castling = castle-fics.wav
-#Check = check.wav
-#Checkmate = checkmate.wav
+Check = check.wav
+Checkmate = checkmate.wav
 #DrawOffer = draw.wav
 #AbortOffer = abort.wav
 #AdjournOffer = adjourn.wav

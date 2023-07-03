@@ -146,6 +146,7 @@ public class SoundManager extends Plugin
     loadEventAudioClip("Move");
     loadEventAudioClip("Capture");
     loadEventAudioClip("Castling");
+    loadEventAudioClip("Check");
     loadEventAudioClip("IllegalMove");
     loadEventAudioClip("GameEnd");
     loadEventAudioClip("GameStart");
